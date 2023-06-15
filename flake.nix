@@ -15,9 +15,15 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      homeConfigurations."kaue@kbook" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./kaue_kbook.nix ];
+      homeConfigurations = {
+        "kaue@kbook" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./kaue_kbook.nix ];
+        };
+        "kaue@cthulhu" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./kaue_server.nix ];
+        };
       };
     };
 }

@@ -1,4 +1,4 @@
-{...}:
+{ pkgs, ... }:
 {
   # Check release notes before updating this
   # https://nix-community.github.io/home-manager/release-notes.html
