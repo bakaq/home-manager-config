@@ -42,7 +42,7 @@ function git_prompt {
 }
 
 function nix_prompt {
-    if [ "${IN_NIX_SHELL}" ]; then
+    if [[ -n $IN_NIX_SHELL ]]; then
         echo "{nix} "
     fi
 }
@@ -51,17 +51,26 @@ function custom_prompt {
     local last_status="$?"
     PS1=""
     PS1+="$(nix_prompt)"
-    PS1+="${CONDA_PROMPT_MODIFIER}"
-    if [ "${last_status}" != "0" ]; then
+    PS1+="$CONDA_PROMPT_MODIFIER"
+    if [[ $last_status != 0 ]]; then
         PS1+="\[\033[0;31m\]${last_status}\[\033[00m\] "
     fi
-    PS1+='[\[\033[01;34m\]\w\[\033[00m\]] '
+    if [[ $HOSTNAME == kbook ]]; then 
+        PS1+='[\[\033[01;34m\]\w\[\033[00m\]] '
+    else
+        PS1+='[\[\033[01;34m\]\w@\h\[\033[00m\]] '
+    fi
     PS1+="$(git_prompt)"
     PS1+='\$ '
 }
 
-PROMPT_DIRTRIM=3
-if [ "$color_prompt" = yes ]; then
+if [[ $HOSTNAME == kbook ]]; then
+    PROMPT_DIRTRIM=3
+else
+    PROMPT_DIRTRIM=2
+fi
+
+if [[ $color_prompt = yes ]]; then
     PROMPT_COMMAND=custom_prompt
 else
     PS1='\u@\h:\w\$ '
@@ -69,9 +78,7 @@ fi
 unset color_prompt force_color_prompt
 
 # Aliases
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
 # Completion
 [[ -f /usr/share/bash-completion/bash_completion ]] && \
