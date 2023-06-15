@@ -31,7 +31,7 @@ alias lessc="less -R"
 
 alias weather="curl 'wttr.in/'"
 
-alias rm="echo 'Use trash-put loser' | cowsay #"
+#alias rm="echo 'Use trash-put loser' | cowsay #"
 
 function zat {
 	zathura "$1" &> /dev/null &
@@ -51,7 +51,7 @@ mkcd () {
 alias diff="diff --color"
 alias fehs="feh --scale-down --auto-zoom"
 alias lsblk="lsblk -o +LABEL"
-alias ls='e' # See shortcut above
+alias ls='exa --group-directories-first --icons'
 
 # Functions
 toggle_conservation_mode () {
