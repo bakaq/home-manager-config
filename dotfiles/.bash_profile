@@ -20,5 +20,6 @@ export GEM_HOME="$(ruby -e 'puts Gem.user_dir' || echo '')"
 export PATH="/home/kaue/.local/bin:$PATH"
 export PATH="/home/kaue/.cargo/bin:$PATH"
 export PATH="$GEM_HOME/bin:$PATH"
+export PATH="/home/kaue/.nix-profile/bin/:$PATH"
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
