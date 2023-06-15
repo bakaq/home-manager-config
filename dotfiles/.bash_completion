@@ -1,0 +1,5 @@
+# ========================
+# === Bash completions ===
+# ========================
+
+complete -F _longopt dragon
