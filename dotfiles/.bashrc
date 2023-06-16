@@ -20,9 +20,10 @@ PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 shopt -s checkwinsize
 
 # Prompt
-case "$TERM" in
-    xterm-color|*-256color|linux|foot) color_prompt=yes;;
-esac
+#case "$TERM" in
+#    xterm-color|*-256color|linux|foot) color_prompt=yes;;
+#esac
+color_prompt=yes
 
 function git_prompt {
     # Don't run in weird filesystems
