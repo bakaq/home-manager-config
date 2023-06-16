@@ -58,7 +58,7 @@ function custom_prompt {
     if [[ $HOSTNAME == kbook ]]; then 
         PS1+='[\[\033[01;34m\]\w\[\033[00m\]] '
     else
-        PS1+='[\[\033[01;34m\]\w@\h\[\033[00m\]] '
+        PS1+='[\[\033[01;34m\]\h:\w\[\033[00m\]] '
     fi
     PS1+="$(git_prompt)"
     PS1+='\$ '
