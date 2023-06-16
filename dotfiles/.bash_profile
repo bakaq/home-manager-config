@@ -15,7 +15,9 @@ export XMODIFIERS=@im=fcitx
 
 export XDG_SCREENSHOTS_DIR="/home/kaue/pics/screenshots"
 
-export GEM_HOME="$(ruby -e 'puts Gem.user_dir' || echo '')"
+if [[ $HOSTNAME == kbook ]]; then
+    export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+fi
 
 export PATH="/home/kaue/.local/bin:$PATH"
 export PATH="/home/kaue/.cargo/bin:$PATH"
