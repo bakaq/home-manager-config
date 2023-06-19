@@ -20,10 +20,6 @@
           inherit pkgs;
           modules = [ ./kaue_kbook.nix ];
         };
-        "kaue@cthulhu" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./kaue_server.nix ];
-        };
       };
     };
 }
