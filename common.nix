@@ -7,10 +7,10 @@
 
   home.file = {
     # Bash
-    ".bashrc".source = ./bash/bashrc;
-    ".bash_profile".source = ./bash/bash_profile;
-    ".bash_aliases".source = ./bash/bash_aliases;
-    ".bash_completion".source = ./bash/bash_completion;
+    ".bashrc".source = ./bash/.bashrc;
+    ".bash_profile".source = ./bash/.bash_profile;
+    ".bash_aliases".source = ./bash/.bash_aliases;
+    ".bash_completion".source = ./bash/.bash_completion;
     # Nvim
     ".config/nvim/init.lua".source = ./nvim/init.lua;
     ".config/nvim/lua".source = ./nvim/lua;
