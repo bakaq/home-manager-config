@@ -6,7 +6,7 @@ augroup packer_user_config
 ]]
 
 -- For LSPs
-on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     local opts = { noremap = true, silent = true }
@@ -38,18 +38,24 @@ require "packer".startup(function(use)
     use "wbthomason/packer.nvim"
 
     use {
-        "glacambre/firenvim",
-        run = function() vim.fn['firenvim#install'](0) end,
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.1',
+        requires = { {'nvim-lua/plenary.nvim'} },
         config = function()
-            vim.g.firenvim_config = {
-                ["localSettings"] = {
-                    [".*"] = {
-                        ["takeover"] = "never",
-                    },
-                },
-            }
+            local builtin = require"telescope.builtin"
+            vim.keymap.set("n", "<Leader>ff", builtin.find_files, {})
+            vim.keymap.set("n", "<Leader>fg", builtin.live_grep, {})
+            vim.keymap.set("n", "<Leader>fb", builtin.buffers, {})
+            vim.keymap.set("n", "<Leader>fs", builtin.lsp_dynamic_workspace_symbols, {})
+            vim.keymap.set("n", "<Leader>fi", builtin.lsp_implementations, {})
+            vim.keymap.set("n", "<Leader>fd", builtin.lsp_definitions, {})
+            vim.keymap.set("n", "<Leader>fr", builtin.lsp_references, {})
+            vim.keymap.set("n", "<Leader>fr", builtin.lsp_type_definitions, {})
+            vim.keymap.set("n", "<Leader>fD", builtin.diagnostics, {})
         end,
     }
+
+    use "editorconfig/editorconfig-vim"
 
     -- LSP
     use {
@@ -60,6 +66,28 @@ require "packer".startup(function(use)
             require "lspconfig".pyright.setup { on_attach = on_attach }
             require "lspconfig".clangd.setup { on_attach = on_attach }
             require "lspconfig".julials.setup { on_attach = on_attach }
+            require "lspconfig".nixd.setup { on_attach = on_attach }
+            require "lspconfig".bashls.setup { on_attach = on_attach }
+            require'lspconfig'.lua_ls.setup {
+                on_attach = on_attach,
+                settings = {
+                    Lua = {
+                        runtime = {
+                            version = 'LuaJIT',
+                        },
+                        diagnostics = {
+                            globals = {'vim'},
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file("", true),
+                            checkThirdParty = false,
+                        },
+                        telemetry = {
+                            enable = false,
+                        },
+                    },
+                },
+            }
 
             local _border = "single"
 
@@ -104,7 +132,7 @@ require "packer".startup(function(use)
     use {
         "simrat39/rust-tools.nvim",
         config = function()
-            require "rust-tools".setup { 
+            require "rust-tools".setup {
                 server = { on_attach = on_attach },
                 tools = {
                     inlay_hints = {
@@ -125,10 +153,6 @@ require "packer".startup(function(use)
             require "nvim-treesitter.configs".setup {
                 ensure_installed = { "zig" },
                 auto_install = true,
-
-                highlight = {
-                    enable = true,
-                },
 
                 highlight = {
                     enable = true,
