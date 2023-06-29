@@ -6,7 +6,7 @@ augroup packer_user_config
 ]]
 
 -- For LSPs
-local on_attach = function(_, bufnr)
+On_attach = function(_, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     local opts = { noremap = true, silent = true }
@@ -40,9 +40,9 @@ require "packer".startup(function(use)
     use {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.1',
-        requires = { {'nvim-lua/plenary.nvim'} },
+        requires = { { 'nvim-lua/plenary.nvim' } },
         config = function()
-            local builtin = require"telescope.builtin"
+            local builtin = require "telescope.builtin"
             vim.keymap.set("n", "<Leader>ff", builtin.find_files, {})
             vim.keymap.set("n", "<Leader>fg", builtin.live_grep, {})
             vim.keymap.set("n", "<Leader>fb", builtin.buffers, {})
@@ -61,22 +61,22 @@ require "packer".startup(function(use)
     use {
         "neovim/nvim-lspconfig",
         config = function()
-            require "lspconfig".texlab.setup { on_attach = on_attach }
-            require "lspconfig".zls.setup { on_attach = on_attach }
-            require "lspconfig".pyright.setup { on_attach = on_attach }
-            require "lspconfig".clangd.setup { on_attach = on_attach }
-            require "lspconfig".julials.setup { on_attach = on_attach }
-            require "lspconfig".nixd.setup { on_attach = on_attach }
-            require "lspconfig".bashls.setup { on_attach = on_attach }
-            require'lspconfig'.lua_ls.setup {
-                on_attach = on_attach,
+            require "lspconfig".texlab.setup { on_attach = On_attach }
+            require "lspconfig".zls.setup { on_attach = On_attach }
+            require "lspconfig".pyright.setup { on_attach = On_attach }
+            require "lspconfig".clangd.setup { on_attach = On_attach }
+            require "lspconfig".julials.setup { on_attach = On_attach }
+            require "lspconfig".nixd.setup { on_attach = On_attach }
+            require "lspconfig".bashls.setup { on_attach = On_attach }
+            require 'lspconfig'.lua_ls.setup {
+                on_attach = On_attach,
                 settings = {
                     Lua = {
                         runtime = {
                             version = 'LuaJIT',
                         },
                         diagnostics = {
-                            globals = {'vim'},
+                            globals = { 'vim' },
                         },
                         workspace = {
                             library = vim.api.nvim_get_runtime_file("", true),
@@ -92,23 +92,23 @@ require "packer".startup(function(use)
             local _border = "single"
 
             vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-              vim.lsp.handlers.hover, {
-                border = _border
-              }
+                vim.lsp.handlers.hover, {
+                    border = _border
+                }
             )
 
             vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-              vim.lsp.handlers.signature_help, {
-                border = _border
-              }
+                vim.lsp.handlers.signature_help, {
+                    border = _border
+                }
             )
 
-            vim.diagnostic.config{
-              float={border=_border}
+            vim.diagnostic.config {
+                float = { border = _border }
             }
 
             require('lspconfig.ui.windows').default_options = {
-              border = _border
+                border = _border
             }
 
             vim.cmd [[
@@ -133,7 +133,7 @@ require "packer".startup(function(use)
         "simrat39/rust-tools.nvim",
         config = function()
             require "rust-tools".setup {
-                server = { on_attach = on_attach },
+                server = { on_attach = On_attach },
                 tools = {
                     inlay_hints = {
                         auto = false,
@@ -141,6 +141,18 @@ require "packer".startup(function(use)
                 },
             }
         end,
+    }
+    use {
+        "jose-elias-alvarez/null-ls.nvim",
+        requires = { "nvim-lua/plenary.nvim" },
+        config = function()
+            local null_ls = require("null-ls")
+            null_ls.setup({
+                sources = {
+                    null_ls.builtins.formatting.black,
+                }
+            })
+        end
     }
 
     -- Treesitter
